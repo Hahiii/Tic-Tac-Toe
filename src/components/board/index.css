@@ -1,0 +1,27 @@
+.board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: absolute;
+  top: calc(50% - 250px);
+  left: calc(50% - 300px);
+  width: 604px;
+  height: 600px;
+}
+
+.board-container__fields {
+  width: 200px;
+  height: 200px;
+}
+
+.right {
+  border-right: 2px solid rgba(0, 0, 0, 0.54);
+}
+
+.bottom {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.54);
+}
+.top {
+  border-top: 2px solid rgba(0, 0, 0, 0.54);
+}
