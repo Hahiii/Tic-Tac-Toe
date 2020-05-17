@@ -1,2 +1,8 @@
 .site-title {
+  height: 100vh;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  margin: 0;
+  font-size: 3.5rem;
+  color: rgba(0, 0, 0, 0.201);
 }
