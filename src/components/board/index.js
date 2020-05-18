@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from "react";
-
+import { getWinner } from "../../helpers/get-winner";
 import "./index.css";
 
 function Board({ player, upDatePlayer, gameIsActive }) {
-  const [gameArray, setGameArray] = useState();
+  const [gotAWiner, setGotAWiner] = useState([]);
+  const [gameArray, setGameArray] = useState([
+    [
+      { line: "right", value: "" },
+      { line: "right", value: "" },
+      { line: "", value: "" },
+    ],
+    [
+      { line: "top right", value: "" },
+      { line: "top right", value: "" },
+      { line: "top", value: "" },
+    ],
+    [
+      { line: "top right", value: "" },
+      { line: "top right", value: "" },
+      { line: "top", value: "" },
+    ],
+  ]);
 
   useEffect(() => {
-    if (!gameArray) {
-      const array = [
-        [
-          { line: "right", value: "" },
-          { line: "right", value: "" },
-          { line: "", value: "" },
-        ],
-        [
-          { line: "top right", value: "" },
-          { line: "top right", value: "" },
-          { line: "top", value: "" },
-        ],
-        [
-          { line: "top right", value: "" },
-          { line: "top right", value: "" },
-          { line: "top", value: "" },
-        ],
-      ];
-      setGameArray(array);
-    }
+    const gotWinner = getWinner(gameArray, player);
+    if (!gotWinner)
+      upDatePlayer(player === "X" ? (player = "O") : (player = "X"));
+    else setGotAWiner(gotWinner);
   }, [gameArray]);
 
   function updateBoard(e) {
-    console.log(e.target.dataset);
     const elementRow = e.target.dataset.row;
     const elementCol = e.target.dataset.col;
     const tempArr = gameArray.map((row, rowIndex) => {
@@ -44,9 +44,8 @@ function Board({ player, upDatePlayer, gameIsActive }) {
       return row;
     });
     setGameArray(tempArr);
-    player === "X" ? (player = "O") : (player = "X");
-    upDatePlayer(player);
   }
+
   return (
     <div className="board-container">
       {gameArray &&
