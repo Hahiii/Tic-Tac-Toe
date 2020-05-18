@@ -1,5 +1,22 @@
 .player__name {
   margin: 0;
-  padding: 8px 0 10px;
+  padding: 20px 0 10px;
   color: rgba(0, 0, 0, 0.747);
+}
+
+.player__stone {
+  padding: 4px 8px 0px;
+  margin-left: 10px;
+  font-size: 2rem;
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.turn__X {
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: solid;
+}
+
+.turn__O {
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: solid;
 }
