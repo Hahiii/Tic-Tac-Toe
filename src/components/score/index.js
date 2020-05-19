@@ -2,8 +2,8 @@ import React from "react";
 
 import "./index.css";
 
-function Score() {
-  return <span className="score">{0}</span>;
+function Score({ score }) {
+  return <span className="score">{score}</span>;
 }
 
 export default Score;

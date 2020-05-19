@@ -9,10 +9,18 @@ function SetPlayers({ onClick }) {
   function handleChange(e) {
     switch (e.target.name) {
       case "X":
-        setPlayerX({ name: e.target.value.trim(), stone: e.target.name });
+        setPlayerX({
+          name: e.target.value.trim(),
+          stone: e.target.name,
+          winns: 0,
+        });
         break;
       case "O":
-        setPlayerO({ name: e.target.value.trim(), stone: e.target.name });
+        setPlayerO({
+          name: e.target.value.trim(),
+          stone: e.target.name,
+          winns: 0,
+        });
         break;
       default:
         break;

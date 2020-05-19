@@ -85,11 +85,93 @@ export function getWinner(arr, player) {
   let winningVertical = checkVertical(arr, player);
   let winningDiagonal = checkDiagonal(arr, player);
 
-  return winningHorizontal
-    ? winningHorizontal
-    : winningVertical
-    ? winningVertical
-    : winningDiagonal
-    ? winningDiagonal
-    : null;
+  if (winningHorizontal) {
+    let x = 0;
+    switch (winningHorizontal) {
+      case "row1":
+        while (x <= arr.length) {
+          arr[0][0].win = "win";
+          arr[0][1].win = "win";
+          arr[0][2].win = "win";
+          x++;
+        }
+        return arr;
+      case "row2":
+        while (x <= arr.length) {
+          arr[1][0].win = "win";
+          arr[1][1].win = "win";
+          arr[1][2].win = "win";
+          x++;
+        }
+        return arr;
+      case "row3":
+        while (x <= arr.length) {
+          arr[2][0].win = "win";
+          arr[2][1].win = "win";
+          arr[2][2].win = "win";
+          x++;
+        }
+        return arr;
+      default:
+        break;
+    }
+  }
+
+  if (winningVertical) {
+    let x = 0;
+    switch (winningVertical) {
+      case "col1":
+        while (x <= arr.length) {
+          arr[0][0].win = "win";
+          arr[1][0].win = "win";
+          arr[2][0].win = "win";
+          x++;
+        }
+        return arr;
+      case "col2":
+        while (x <= arr.length) {
+          arr[0][1].win = "win";
+          arr[1][1].win = "win";
+          arr[2][1].win = "win";
+          x++;
+        }
+        return arr;
+      case "col3":
+        while (x <= arr.length) {
+          arr[0][2].win = "win";
+          arr[1][2].win = "win";
+          arr[2][2].win = "win";
+          x++;
+        }
+        return arr;
+      default:
+        break;
+    }
+  }
+
+  if (winningDiagonal) {
+    let x = 0;
+    switch (winningDiagonal) {
+      case "diagonalLeft":
+        while (x <= arr.length) {
+          arr[0][0].win = "win";
+          arr[1][1].win = "win";
+          arr[2][2].win = "win";
+          x++;
+        }
+        return arr;
+      case "diagonalRight":
+        while (x <= arr.length) {
+          arr[0][2].win = "win";
+          arr[1][1].win = "win";
+          arr[2][0].win = "win";
+          x++;
+        }
+        return arr;
+      default:
+        break;
+    }
+  }
+
+  return false;
 }

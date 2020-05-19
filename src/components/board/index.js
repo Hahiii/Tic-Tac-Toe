@@ -2,47 +2,76 @@ import React, { useState, useEffect } from "react";
 import { getWinner } from "../../helpers/get-winner";
 import "./index.css";
 
-function Board({ player, upDatePlayer, gameIsActive }) {
-  const [gotAWiner, setGotAWiner] = useState([]);
-  const [gameArray, setGameArray] = useState([
+function Board({
+  player,
+  upDatePlayer,
+  upDateScore,
+  gameIsActive,
+  playersObj,
+}) {
+  const INIT_GAME_ARRAY = [
     [
-      { line: "right", value: "" },
-      { line: "right", value: "" },
-      { line: "", value: "" },
+      { line: "right", value: "", win: "" },
+      { line: "right", value: "", win: "" },
+      { line: "", value: "", win: "" },
     ],
     [
-      { line: "top right", value: "" },
-      { line: "top right", value: "" },
-      { line: "top", value: "" },
+      { line: "top right", value: "", win: "" },
+      { line: "top right", value: "", win: "" },
+      { line: "top", value: "", win: "" },
     ],
     [
-      { line: "top right", value: "" },
-      { line: "top right", value: "" },
-      { line: "top", value: "" },
+      { line: "top right", value: "", win: "" },
+      { line: "top right", value: "", win: "" },
+      { line: "top", value: "", win: "" },
     ],
-  ]);
+  ];
+  const [gameWonArray, setGameWonArray] = useState([]);
+  const [gameArray, setGameArray] = useState(INIT_GAME_ARRAY);
 
   useEffect(() => {
-    const gotWinner = getWinner(gameArray, player);
-    if (!gotWinner)
-      upDatePlayer(player === "X" ? (player = "O") : (player = "X"));
-    else setGotAWiner(gotWinner);
+    if (!gameWonArray.length) {
+      const gameArrayClone = [];
+      gameArray.forEach((row) => {
+        const arr = [];
+        row.forEach((col) => {
+          arr.push({ ...col });
+        });
+        gameArrayClone.push(arr);
+      });
+      const gotWinner = getWinner(gameArrayClone, player);
+      if (!gotWinner) {
+        upDatePlayer(player === "X" ? (player = "O") : (player = "X"));
+      } else {
+        setGameWonArray(gotWinner);
+      }
+    }
   }, [gameArray]);
 
+  useEffect(() => {
+    if (gameWonArray.length) {
+      const playersObjClone = [];
+      playersObj.forEach((element) => {
+        if (element.stone === player) {
+          element.winns += 1;
+        }
+        playersObjClone.push(element);
+      });
+      setGameArray(gameWonArray);
+      upDateScore(playersObjClone);
+    }
+  }, [gameWonArray]);
+
   function updateBoard(e) {
+    if (gameWonArray.length) {
+      setGameArray(INIT_GAME_ARRAY);
+      setGameWonArray([]);
+      return true;
+    }
     const elementRow = e.target.dataset.row;
     const elementCol = e.target.dataset.col;
-    const tempArr = gameArray.map((row, rowIndex) => {
-      if (rowIndex === Number(elementRow)) {
-        row.map((col, colIndex) => {
-          if (colIndex === Number(elementCol)) {
-            col.value = player;
-          }
-          return col;
-        });
-      }
-      return row;
-    });
+    const tempArr = [...gameArray];
+    tempArr[elementRow][elementCol].value = player;
     setGameArray(tempArr);
   }
 
@@ -53,13 +82,13 @@ function Board({ player, upDatePlayer, gameIsActive }) {
           return row.map((col, colIndex) => {
             return (
               <div
-                className={`board-container__fields ${col.line}`}
+                className={`board-container__fields ${col.line} `}
                 data-row={rowIndex}
                 data-col={colIndex}
                 key={`row-${rowIndex} col-${colIndex}`}
                 onClick={gameIsActive && !col.value ? updateBoard : null}
               >
-                {col.value}
+                <span className={`${col.win ? "win" : ""}`}>{col.value}</span>
               </div>
             );
           });

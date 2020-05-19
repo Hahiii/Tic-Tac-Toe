@@ -1,5 +1,4 @@
 import React from "react";
-import Score from "../score";
 import "./index.css";
 
 function Player({ player, stone, turn }) {
@@ -11,7 +10,6 @@ function Player({ player, stone, turn }) {
           {stone}
         </span>
       </h2>
-      <Score />
     </div>
   );
 }
